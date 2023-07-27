@@ -1,6 +1,7 @@
 package com.tritonTech.studentManagement.controller;
 
 import com.tritonTech.studentManagement.dto.UserRegistrationDto;
+import com.tritonTech.studentManagement.model.User;
 import com.tritonTech.studentManagement.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,20 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @RequestMapping("")
+    @RequestMapping("/login")
     public String userLogin(){
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginSubmit(@ModelAttribute User user) {
+        // Here you would implement the authentication logic
+        // For simplicity, let's assume you have a hardcoded user with email "test@example.com" and password "password"
+        if (user.getEmail().equals("test@example.com") && user.getPassword().equals("password")) {
+            return "redirect:/dashboard"; // Redirect to a dashboard or home page on successful login
+        } else {
+            return "redirect:/login?error"; // Redirect back to the login page with an error parameter
+        }
     }
 
 
